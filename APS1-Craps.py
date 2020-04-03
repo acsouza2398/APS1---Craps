@@ -1,3 +1,5 @@
+#BET FUNCTIONS
+
 #Field bet
 def field(d, c, bet):
      if d == 5 or d == 6 or d == 7 or d == 8:
@@ -53,30 +55,33 @@ def plb(d, c, bet):
       return c
    
 
+###################################################################
+#GAME STARTS HERE
+
 import random
 
 #start with 30 chips
 c = 30
 
-#round begin
+#round begin - Come Out phase
 while c > 0:
    print("Fase Come Out")
    print("Você tem {0} fichas.".format(c))
    phase = "c"
 
-   #Continue game?
-   answer = input("Você quer apostar? ")
+   #continue game?
+   answer = input("Você quer apostar? (sim/não) ")
    if answer == "não":
       print("Obrigada por Jogar! Você terminou com {0} fichas.".format(c))
       quit()
 
-   #Define amount of bets
+   #define amount of bets
    amount = int(input("Quantos tipos de aposta quer fazer? \n Opções: \n Pass Line Bet \n Field \n Any Craps \n Twelve "))
    while amount > 4:
       print("Não há tantos tipos de aposta. Favor escolher de novo (Máximo de 4). ")
       amount = int(input("Quantos tipos de aposta quer fazer? \n Opções: \n Pass Line Bet \n Field \n Any Craps \n Twelve "))
    
-   #Define type of bet and how many chips per bet
+   #define type of bet and how many chips per bet
    i = 0
    b = 0
    typeb = [0]*amount
@@ -106,7 +111,7 @@ while c > 0:
       b=b+bet[i]
       i=i+1
    
-   #Failsafe for chip amount > bet total
+   #failsafe for chip amount < bet total
    if b > c:
       print("Você apostou mais do que tem. Favor apostar de novo")
       r=1
@@ -152,16 +157,17 @@ while c > 0:
    d1 = random.randint(1,6)
    d2 = random.randint(1,6)
    d = d1 + d2
+   print("O valor dos dados deu {0}!".format(d))
    
    #playing out the bets
    i=0
    while i < amount:
       if typeb[i] == 2:
-         c=field(d,c,bet[i])
+         c = field(d,c,bet[i])
       elif typeb[i] == 3:
-         c=craps(d,c,bet[i])  
+         c = craps(d,c,bet[i])  
       elif typeb[i] == 4:
-         c=twelve(d,c,bet[i])
+         c = twelve(d,c,bet[i])
       elif typeb[i] == 1:
          c1 = plb(d,c,bet[i])
          if c1 == c:
@@ -176,17 +182,14 @@ while c > 0:
       break
 
 
-
-
-
-
-
+  ###################################################################
    #phase shift
    if phase == "p":
       print("Mudança de fase para Point")
       point=d
       betpld = tempbet
 
+   #start Point phase
    while phase == "p":
       print("Fase Point")
       print("Você tem {0} fichas.".format(c))
@@ -224,7 +227,7 @@ while c > 0:
             b=b+bet[i]
             i=i+1
    
-         #Failsafe for chip amount > bet total
+         #failsafe for chip amount > bet total
          if b > c:
             print("Você apostou mais do que tem. Favor apostar de novo")
             r=1
@@ -266,6 +269,7 @@ while c > 0:
       d1 = random.randint(1,6)
       d2 = random.randint(1,6)
       d = d1 + d2
+      print("O valor dos dados deu {0}!".format(d))
    
       #playing out the bets
       i=0
@@ -294,11 +298,5 @@ while c > 0:
       #exit if no chips left
       if c <= 0:
          break
-
-
-
-      
-
-   
+  
 print("Você perdeu todas as fichas. Q azar!")
-   
