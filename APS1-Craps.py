@@ -49,6 +49,8 @@ def plb(d, c, bet):
       print("Você perdeu a aposta com o Pass Line Bet!")
       c = c - bet
       return c
+   else:
+      return c
    
 
 import random
@@ -164,6 +166,7 @@ while c > 0:
          c1 = plb(d,c,bet[i])
          if c1 == c:
             phase = "p"
+            tempbet = bet[i]
          else:
             c=c1
       i=i+1
@@ -172,10 +175,130 @@ while c > 0:
    if c <= 0:
       break
 
+
+
+
+
+
+
    #phase shift
    if phase == "p":
       print("Mudança de fase para Point")
+      point=d
+      betpld = tempbet
+
+   while phase == "p":
+      print("Fase Point")
+      print("Você tem {0} fichas.".format(c))
+      
+      #Define amount of bets
+      amount = int(input("Quantos tipos de aposta quer fazer? \n Opções: \n Field \n Any Craps \n Twelve "))
+      while amount > 3:
+         print("Não há tantos tipos de aposta. Favor escolher de novo (Máximo de 3). ")
+         amount = int(input("Quantos tipos de aposta quer fazer? \n Opções: \n Field \n Any Craps \n Twelve "))
+
+      #Define type of bet and how many chips per bet
+      if amount > 0:
+         i = 0
+         b = 0
+         typeb = [0]*amount
+         bet = [0]*amount
+         alltypes = ["Field (1)", "Any Craps (2)", "Twelve(3)"]
+         while i < amount:
+            typeb[i] = int(input("Qual aposta você quer fazer (aposta n° {0})? \n Opções: \n {1} \n {2} \n {3} ".format(i+1,alltypes[0],alltypes[1],alltypes[2])))
+            if typeb[i] == 1:
+               rtype = "Field"
+               bet[i] = int(input("Quanto você quer apostar em {0}? ".format(rtype)))
+               alltypes[0] = ""
+            elif typeb[i] == 2:
+               rtype = "Any Craps"
+               bet[i] = int(input("Quanto você quer apostar em {0}? ".format(rtype)))
+               alltypes[1] = ""
+            elif typeb[i] == 3:
+               rtype = "Twelve"
+               bet[i] = int(input("Quanto você quer apostar em {0}? ".format(rtype)))
+               alltypes[2] = ""
+            else:
+               print("Favor digitar um tipo de aposta válido (número do lado do nome da aposta).")
+               i=i-1
+            b=b+bet[i]
+            i=i+1
    
+         #Failsafe for chip amount > bet total
+         if b > c:
+            print("Você apostou mais do que tem. Favor apostar de novo")
+            r=1
+         else:
+            r=0
+      
+         while r == 1:
+            i = 0
+            b = 0
+            typeb = [0]*amount
+            bet = [0]*amount
+            alltypes = ["Field (1)", "Any Craps (2)", "Twelve(3)"]
+            while i < amount:
+               typeb[i] = int(input("Qual aposta você quer fazer (aposta n° {0})? \n Opções: \n {1} \n {2} \n {3} ".format(i+1,alltypes[0],alltypes[1],alltypes[2])))
+               if typeb[i] == 1:
+                  rtype = "Field"
+                  bet[i] = int(input("Quanto você quer apostar em {0}? ".format(rtype)))
+                  alltypes[0] = ""
+               elif typeb[i] == 2:
+                  rtype = "Any Craps"
+                  bet[i] = int(input("Quanto você quer apostar em {0}? ".format(rtype)))
+                  alltypes[1] = ""
+               elif typeb[i] == 3:
+                  rtype = "Twelve"
+                  bet[i] = int(input("Quanto você quer apostar em {0}? ".format(rtype)))
+                  alltypes[2] = ""
+               else:
+                  print("Favor digitar um tipo de aposta válido (número do lado do nome da aposta).")
+                  i=i-1
+               b=b+bet[i]
+               i=i+1
+            if b > c:
+               print("Você apostou mais do que tem. Favor apostar de novo")
+               d=1
+            else:
+               d=0
+
+      #roll dice
+      d1 = random.randint(1,6)
+      d2 = random.randint(1,6)
+      d = d1 + d2
+   
+      #playing out the bets
+      i=0
+      while i < amount:
+         if typeb[i] == 1:
+            c=field(d,c,bet[i])
+         elif typeb[i] == 2:
+            c=craps(d,c,bet[i])  
+         elif typeb[i] == 3:
+            c=twelve(d,c,bet[i])
+         i=i+1
+
+      
+      #checking pass line bet
+      if d == point:
+         print("Você ganhou {0} com o Pass Line Bet!".format(betpld))
+         c = c + betpld
+         print("Fim da fase Point")
+         phase = "c"
+         break
+      elif d == 7:
+         print("Você perdeu tudo com o Pass Line Bet!")
+         c = 0
+         break
+      
+      #exit if no chips left
+      if c <= 0:
+         break
+
+
+
+      
+
    
 print("Você perdeu todas as fichas. Q azar!")
    
