@@ -15,6 +15,24 @@ def field(d, c, bet):
         c = c + bet*3
      return c
 
+#Any Craps bet
+def craps(d, c, bet):
+   if d == 2 or d == 3 or d == 12:
+      print("Você ganhou {0}!".format(bet*7))
+      c = c + bet*7
+   else:
+      print("Você perdeu a aposta!")
+      c = c - bet
+   return c
+
+#Twelve bet
+def twelve(d, c, bet):
+   if d == 12:
+      print("Você ganhou {0}!".format(bet*30))
+      c = c + bet*30
+   else:
+      print("Você perdeu a aposta!")
+      c = c - bet
 
 import random
 
