@@ -34,6 +34,19 @@ def twelve(d, c, bet):
       print("Você perdeu a aposta!")
       c = c - bet
 
+#Pass Line bet
+def plb(d, c, bet):
+   if d == 7 or d == 11:
+      print("Você ganhou {0}!".format(bet))
+      c = c + bet
+      return c
+   elif d == 2 or d == 3 or d == 12:
+      print("Você perdeu a aposta!")
+      c = c - bet
+      return c
+   else:
+      return "p"
+
 import random
 
 #start with 30 chips
