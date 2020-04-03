@@ -3,7 +3,7 @@ def field(d, c, bet):
      if d == 5 or d == 6 or d == 7 or d == 8:
          print("Você perdeu tudo!")
          c = 0
-         quit()
+         break()
      elif d == 3 or d == 4 or d == 9 or d == 10 or d == 11:
         print("Você ganhou {0}!".format(bet))
         c = c + bet
@@ -50,15 +50,27 @@ def plb(d, c, bet):
 import random
 
 #start with 30 chips
-c = 30
+   c = 30
 
-#roll dice
-d1 = random.randint(1,6)
-d2 = random.randint(1,6)
-d = d1 + d2
+#round begin
+while c > 0:
+   print("Fase Come Out")
 
-bet = 10
+   answer = input("Você quer apostar? ")
+   if answer = "não":
+      break()
+   amount = int(input("Quantos tipos de aposta quer fazer?"))
+   
+   i = 0
+   typeb = []*amount
+   bet = []*amount
 
-c = field(d,c,bet)
-
-print (c)
+   while i < amount:
+      typeb[i] = input("Qual aposta você quer fazer? \n Opções: \n Pass Line Bet \n Field \n Any Craps \n Twelve")
+      bet[i] = int(input("Quanto você quer apostar em {0}? ".format(typeb[i])))
+      i=i+1
+   
+   #roll dice
+   d1 = random.randint(1,6)
+   d2 = random.randint(1,6)
+   d = d1 + d2
